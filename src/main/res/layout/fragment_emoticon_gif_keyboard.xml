@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--Top divider-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width_large"
+        android:background="?itemBackground" />
+
+    <!--View pager to display GIF/Emoticon-->
+    <FrameLayout
+        android:id="@+id/keyboard_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_light" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width_large"
+        android:background="?itemBackground" />
+
+    <!--Bottom container-->
+    <RelativeLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_tabs_container_height"
+        android:background="@color/background_dark"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        tools:ignore="UnusedAttribute">
+
+        <!--Search button-->
+        <com.techupstudio.emoticongifkeyboard.widget.ImageButtonView
+            android:id="@+id/search_btn"
+            android:layout_width="@dimen/keyboard_tabs_container_height"
+            android:layout_height="@dimen/keyboard_tabs_container_height"
+            android:layout_alignParentBottom="true"
+            android:background="?selectableItemBackground"
+            android:padding="@dimen/image_btn_padding"
+            android:src="@drawable/ic_baseline_search_24"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <!--Backspace button-->
+        <com.techupstudio.emoticongifkeyboard.widget.ImageButtonView
+            android:id="@+id/emojis_backspace"
+            android:layout_width="@dimen/keyboard_tabs_container_height"
+            android:layout_height="@dimen/keyboard_tabs_container_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="?selectableItemBackground"
+            android:padding="@dimen/image_btn_padding"
+            android:src="@drawable/ic_outline_backspace_24"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <!--Emoticon/GIF button container-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <!--Emoticon button-->
+            <com.techupstudio.emoticongifkeyboard.widget.ImageButtonView
+                android:id="@+id/btn_emoji_tab"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="@dimen/keyboard_tabs_container_height"
+                android:layout_height="@dimen/keyboard_tabs_container_height"
+                android:background="?selectableItemBackground"
+                android:padding="@dimen/image_btn_padding"
+                android:src="@drawable/ic_baseline_emoji_emotions_24"
+                tools:ignore="ContentDescription" />
+
+
+            <!--GIF button-->
+            <com.techupstudio.emoticongifkeyboard.widget.ImageButtonView
+                android:id="@+id/btn_gif_tab"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="@dimen/keyboard_tabs_container_height"
+                android:layout_height="@dimen/keyboard_tabs_container_height"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_baseline_list_alt_24"
+                tools:ignore="ContentDescription,RtlHardcoded" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
