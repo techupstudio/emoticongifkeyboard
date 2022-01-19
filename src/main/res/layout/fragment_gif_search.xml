@@ -39,7 +39,7 @@
     </ViewFlipper>
 
     <!--Search box container-->
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/keyboard_tabs_container_height"
@@ -59,20 +59,11 @@
             android:padding="@dimen/image_btn_padding"
             android:src="@drawable/ic_baseline_arrow_back_24" />
 
-        <!--Back button-->
-        <com.techupstudio.emoticongifkeyboard.widget.ImageButtonView
-            android:id="@+id/search_btn"
-            android:layout_width="@dimen/keyboard_tabs_container_height"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/image_btn_padding"
-            android:src="@drawable/ic_baseline_search_24" />
-
         <!--Search box-->
         <EditText
             android:id="@+id/search_box_et"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_toStartOf="@id/search_btn"
             android:layout_toLeftOf="@id/search_btn"
@@ -85,7 +76,18 @@
             android:padding="@dimen/image_btn_padding"
             android:singleLine="true"
             tools:ignore="Deprecated" />
-    </RelativeLayout>
+
+        <!--Back button-->
+        <com.techupstudio.emoticongifkeyboard.widget.ImageButtonView
+            android:id="@+id/search_btn"
+            android:layout_width="@dimen/keyboard_tabs_container_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/image_btn_padding"
+            android:src="@drawable/ic_baseline_search_24" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </LinearLayout>
 
 

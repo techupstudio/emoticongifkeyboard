@@ -34,7 +34,7 @@
     </ViewFlipper>
 
     <!--Search box container-->
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/keyboard_tabs_container_height"
@@ -68,5 +68,6 @@
             android:padding="@dimen/image_btn_padding"
             android:singleLine="true"
             tools:ignore="Deprecated" />
-    </RelativeLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </LinearLayout>
