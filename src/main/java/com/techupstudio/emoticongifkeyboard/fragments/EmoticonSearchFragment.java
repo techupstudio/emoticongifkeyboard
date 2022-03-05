@@ -177,7 +177,8 @@ public final class EmoticonSearchFragment extends Fragment implements EmoticonSe
         backBtn.setOnClickListener(view1 -> {
             mSearchEditText.setText("");
             EmoticonSearchFragment.this.hideKeyboard();
-            requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            if (getOnBackIconPressedCallback() != null)
+                getOnBackIconPressedCallback().handleOnBackPressed();
         });
 //        //Open the keyboard.
         showKeyboard();

@@ -1,8 +1,9 @@
 package com.techupstudio.emoticongifkeyboard.fragments;
 
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,7 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
     private boolean mIsOpen = true;
     private String mLastFragmentTag;
     private String mCurrentFragmentTag;
+    private OnBackPressedCallback mOnBackPressedCallback;
 
 
     @SuppressWarnings("DeprecatedIsStillUsed")
@@ -282,6 +284,7 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
         GifSearchFragment gifSearchFragment = GifSearchFragment.newInstance(null);
         if (requireArguments().containsKey("gifConfig")) {
             gifSearchFragment.setArguments(requireArguments().getBundle("gifConfig"));
+            gifSearchFragment.setOnBackIconPressedCallback(mOnBackPressedCallback);
         }
         gifSearchFragment.setGifProvider(Objects.requireNonNull(mGifProvider));
         gifSearchFragment.setGifSelectListener(mGifSelectListener);
@@ -293,13 +296,7 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
         EmoticonSearchFragment emoticonSearchFragment = EmoticonSearchFragment.newInstance(null);
         if (requireArguments().containsKey("emoticonConfig")) {
             emoticonSearchFragment.setArguments(requireArguments().getBundle("emoticonConfig"));
-            emoticonSearchFragment.setOnBackIconPressedCallback(new OnBackPressedCallback(false) {
-                @Override
-                public void handleOnBackPressed() {
-//                    Utility.log("EmoticonSearchFragment handleOnBackPressed");
-                    onBackPressed();
-                }
-            });
+            emoticonSearchFragment.setOnBackIconPressedCallback(mOnBackPressedCallback);
         }
         emoticonSearchFragment.setEmoticonProvider(mEmoticonProvider);
         emoticonSearchFragment.setEmoticonSelectListener(Objects.requireNonNull(mEmoticonSelectListener));
@@ -340,29 +337,6 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
 
     public String getCurrentFragmentTag() {
         return mCurrentFragmentTag;
-    }
-
-    /**
-     * Handle the back key pressed event. Implement this method to {@link Activity#onBackPressed()}
-     * of your activity.
-     * <p>
-     * Sample:
-     * <code>
-     * public void onBackPressed() {<br/>
-     * if (mEmoticonGIFKeyboardFragment == null || !mEmoticonGIFKeyboardFragment.handleBackPressed())<br/>
-     * super.onBackPressed();<br/>
-     * }<br/>
-     * </code>
-     *
-     * @return True if the back press event is handled by this method. Else it will false.
-     */
-    public boolean handleBackPressed() {
-        //Close the emoticon fragment
-        if (isOpen()) {
-            toggle();
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -410,7 +384,7 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
     @SuppressWarnings("ConstantConditions")
     public void setEmoticonSelectListener(@Nullable EmoticonSelectListener emoticonSelectListener) {
         mEmoticonSelectListener = emoticonSelectListener;
-       if (mEmoticonFragment != null) mEmoticonFragment.setEmoticonSelectListener(emoticonSelectListener);
+        if (mEmoticonFragment != null) mEmoticonFragment.setEmoticonSelectListener(emoticonSelectListener);
         if (mEmoticonSearchFragment != null) mEmoticonSearchFragment.setEmoticonSelectListener(emoticonSelectListener);
     }
 
@@ -452,6 +426,14 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
         if (mGifSearchFragment != null) mGifSearchFragment.setGifSelectListener(gifSelectListener);
     }
 
+    public void setOnBackPressedCallback(OnBackPressedCallback onBackPressedCallback) {
+        this.mOnBackPressedCallback = onBackPressedCallback;
+    }
+
+    public OnBackPressedCallback getOnBackPressedCallback() {
+        return mOnBackPressedCallback;
+    }
+
     /**
      * @return True if emoticons are enable for the keyboard.
      */
@@ -485,15 +467,6 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
         if (mRootView != null)
             mRootView.setVisibility(View.GONE);
         switchFragment(TAG_EMOTICON_FRAGMENT);
-    }
-
-    /**
-     * Toggle the {@link EmoticonGIFKeyboardFragment} visibility.
-     */
-    public void toggle() {
-        if (isOpen())
-            close();
-        else open();
     }
 
     /**

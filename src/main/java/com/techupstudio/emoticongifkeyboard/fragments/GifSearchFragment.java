@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -88,7 +89,8 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
     /**
      * Search text input
      */
-    private EditText mSearchEt;
+    private EditText mSearchEditText;
+    private OnBackPressedCallback mOnBackPressedCallback;
 
     public GifSearchFragment() {
         // Required empty public constructor
@@ -128,21 +130,21 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
         mRecyclerView.setAdapter(mGifGridAdapter);
 
         //Set the search interface
-        mSearchEt = view.findViewById(R.id.search_box_et);
-        mSearchEt.requestFocus();
-        view.findViewById(R.id.search_btn).setOnClickListener(view1 -> GifSearchFragment.this.searchGif(mSearchEt.getText().toString()));
-        mSearchEt.setOnEditorActionListener((textView, i, keyEvent) -> {
-            GifSearchFragment.this.searchGif(mSearchEt.getText().toString());
+        mSearchEditText = view.findViewById(R.id.search_box_et);
+        mSearchEditText.requestFocus();
+        view.findViewById(R.id.search_btn).setOnClickListener(view1 -> GifSearchFragment.this.searchGif(mSearchEditText.getText().toString()));
+        mSearchEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
+            GifSearchFragment.this.searchGif(mSearchEditText.getText().toString());
             return true;
         });
 
         //Set up button
         ImageButtonView backBtn = view.findViewById(R.id.up_arrow);
         backBtn.setOnClickListener(view12 -> {
+            mSearchEditText.setText("");
             GifSearchFragment.this.hideKeyboard();
-            mSearchEt.setText("");
-            //Pop fragment from the back stack
-            GifSearchFragment.this.getParentFragmentManager().popBackStackImmediate(EmoticonGIFKeyboardFragment.TAG_GIF_FRAGMENT, 0);
+            if (getOnBackIconPressedCallback() != null)
+                getOnBackIconPressedCallback().handleOnBackPressed();
         });
 
         showKeyboard();
@@ -151,7 +153,7 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
     @Override
     public void onResume() {
         super.onResume();
-        mSearchEt.setText("");
+        mSearchEditText.setText("");
         //Start loading trending GIFs
         if (mTrendingGifTask != null)
             mTrendingGifTask.cancel(true);
@@ -167,7 +169,7 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
     private void showKeyboard() {
         //Show the keyboard
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) imm.showSoftInput(mSearchEt, 0);
+        if (imm != null) imm.showSoftInput(mSearchEditText, 0);
     }
 
     /**
@@ -176,7 +178,7 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
     private void hideKeyboard() {
         //Hide the keyboard
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) imm.hideSoftInputFromWindow(mSearchEt.getWindowToken(), 0);
+        if (imm != null) imm.hideSoftInputFromWindow(mSearchEditText.getWindowToken(), 0);
     }
 
     /**
@@ -229,6 +231,14 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
      */
     public void setGifSelectListener(@Nullable final GifSelectListener gifSelectListener) {
         mGifSelectListener = gifSelectListener;
+    }
+
+    public void setOnBackIconPressedCallback(OnBackPressedCallback onBackPressedCallback) {
+        mOnBackPressedCallback = onBackPressedCallback;
+    }
+
+    public OnBackPressedCallback getOnBackIconPressedCallback() {
+        return mOnBackPressedCallback;
     }
 
     @SuppressLint("StaticFieldLeak")
