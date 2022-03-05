@@ -1,9 +1,7 @@
 package com.techupstudio.emoticongifkeyboard.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringDef;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.techupstudio.emoticongifkeyboard.R;
 import com.techupstudio.emoticongifkeyboard.core.interfaces.EmoticonProvider;
@@ -186,6 +185,16 @@ public final class EmoticonGIFKeyboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRootView = view.findViewById(R.id.root_view);
+
+        mOnBackPressedCallback = mOnBackPressedCallback != null ? mOnBackPressedCallback : new OnBackPressedCallback(true) {
+
+            final FragmentActivity activity = requireActivity();
+
+            @Override
+            public void handleOnBackPressed() {
+                activity.onBackPressed();
+            }
+        };
 
         if (requireArguments().containsKey("emoticonConfig")) {
             requireView().findViewById(R.id.bottom_container).setBackgroundColor(requireArguments().getBundle("emoticonConfig").getInt("headerFooterColor"));
