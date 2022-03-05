@@ -142,7 +142,6 @@ public final class GifSearchFragment extends Fragment implements GifSearchAdapte
         ImageButtonView backBtn = view.findViewById(R.id.up_arrow);
         backBtn.setOnClickListener(view12 -> {
             mSearchEditText.setText("");
-            GifSearchFragment.this.hideKeyboard();
             if (getOnBackIconPressedCallback() != null)
                 getOnBackIconPressedCallback().handleOnBackPressed();
         });

@@ -176,7 +176,6 @@ public final class EmoticonSearchFragment extends Fragment implements EmoticonSe
         ImageButtonView backBtn = view.findViewById(R.id.up_arrow);
         backBtn.setOnClickListener(view1 -> {
             mSearchEditText.setText("");
-            EmoticonSearchFragment.this.hideKeyboard();
             if (getOnBackIconPressedCallback() != null)
                 getOnBackIconPressedCallback().handleOnBackPressed();
         });
