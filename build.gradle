@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 ext.versions = [
         minSdk            : 21,
         compileSdk        : 31,
-        buildTools        : '30.0.2',
         publishVersion    : '1.0.0',
         publishVersionCode: 1,
 ]
@@ -17,7 +16,7 @@ ext.deps = [
         ],
 
         androidx     : [
-                appcompat         : 'androidx.appcompat:appcompat:1.4.1',
+                appcompat         : 'androidx.appcompat:appcompat:1.6.1',
                 coordinatorlayout : 'androidx.coordinatorlayout:coordinatorlayout:1.2.0',
                 swiperefreshlayout: 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0',
         ],
@@ -33,7 +32,7 @@ ext.deps = [
                 sqliteasset     : 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1',
         ],
 
-        material     : 'com.google.android.material:material:1.5.0',
+        material     : 'com.google.android.material:material:1.9.0',
 
         kotlin       : [
                 stdlib8: 'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
@@ -44,8 +43,8 @@ ext.deps = [
 
 
 android {
+    namespace 'com.techupstudio.emoticongifkeyboard'
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
 
     defaultConfig {
         minSdkVersion versions.minSdk
@@ -89,8 +88,5 @@ dependencies {
     annotationProcessor deps.github.glidecompiler
 }
 
-repositories {
-    mavenCentral()
-}
 
 //$ ./gradlew clean build bintrayUpload -PbintrayUser=thefinestartist -PbintrayKey=BINTRAY_KEY -PdryRun=false

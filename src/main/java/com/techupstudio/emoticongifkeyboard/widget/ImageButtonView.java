@@ -88,7 +88,7 @@ public final class ImageButtonView extends AppCompatImageView {
     @ColorInt
     public int getAccentColor(@NonNull final Context context) {
         final TypedValue value = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        context.getTheme().resolveAttribute(android.R.attr.colorAccent, value, true);
         return value.data;
     }
 }
