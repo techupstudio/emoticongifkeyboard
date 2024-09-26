@@ -2,9 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 ext.versions = [
-        minSdk            : 21,
-        compileSdk        : 31,
-        buildTools        : '30.0.2',
+        minSdk            : 23,
+        compileSdk        : 34,
         publishVersion    : '1.0.0',
         publishVersionCode: 1,
 ]
@@ -12,12 +11,12 @@ ext.versions = [
 ext.deps = [
         gradlePlugins: [
                 android: 'com.android.tools.build:gradle:4.2.1',
-                kotlin : 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10',
+                kotlin : 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20',
                 bintray: 'com.novoda:bintray-release:0.9',
         ],
 
         androidx     : [
-                appcompat         : 'androidx.appcompat:appcompat:1.4.1',
+                appcompat         : 'androidx.appcompat:appcompat:1.7.0',
                 coordinatorlayout : 'androidx.coordinatorlayout:coordinatorlayout:1.2.0',
                 swiperefreshlayout: 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0',
         ],
@@ -33,10 +32,10 @@ ext.deps = [
                 sqliteasset     : 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1',
         ],
 
-        material     : 'com.google.android.material:material:1.5.0',
+        material     : 'com.google.android.material:material:1.12.0',
 
         kotlin       : [
-                stdlib8: 'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+                stdlib8: 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20',
         ],
 
         emoticongifkeyboard: 'com.techupstudio:emoticongifkeyboard:' + versions.publishVersionCode
@@ -44,14 +43,12 @@ ext.deps = [
 
 
 android {
+    namespace 'com.techupstudio.emoticongifkeyboard'
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode versions.publishVersionCode
-        versionName versions.publishVersion
+        minSdk versions.minSdk
+        targetSdk versions.compileSdk
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -89,8 +86,5 @@ dependencies {
     annotationProcessor deps.github.glidecompiler
 }
 
-repositories {
-    mavenCentral()
-}
 
 //$ ./gradlew clean build bintrayUpload -PbintrayUser=thefinestartist -PbintrayKey=BINTRAY_KEY -PdryRun=false
